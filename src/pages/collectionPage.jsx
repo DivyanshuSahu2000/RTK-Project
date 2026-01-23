@@ -27,7 +27,7 @@ const CollectionPage = () => {
         </div>
       ) : (
         <h2 className="text-5xl py-10 text-gray-300 text-center font-medium">
-          Collection is Empty
+          Collection is Empty!
         </h2>
       )}
 
