@@ -7,7 +7,7 @@ const Tabs = () => {
   const dispatch = useDispatch();
   const activeTab = useSelector((state) => state.search.activeTab);
   return (
-    <div className="flex sm:gap-5 gap-2 sm:p-6 p-3">
+    <div className="flex sm:gap-5 gap-2 sm:p-6 p-3 px-3">
       {tabs.map((tab, id) => {
         return (
           <button

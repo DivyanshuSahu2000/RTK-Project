@@ -20,13 +20,13 @@ const CollectionPage = () => {
             onClick={() => {
               clearAll();
             }}
-            className="active:scale-95 text-base transition cursor-pointer bg-red-600 sm:px-6 px-4 py-3 sm:text-lg font-medium rounded"
+            className="active:scale-95 text-base transition cursor-pointer bg-red-600 sm:px-6 px-3 py-2 sm:text-lg font-medium rounded"
           >
             Clear All
           </button>
         </div>
       ) : (
-        <h2 className="text-5xl py-10 text-gray-300 text-center font-medium">
+        <h2 className="sm:text-4xl text-2xl py-10 text-gray-300 text-center font-medium">
           Collection is Empty!
         </h2>
       )}

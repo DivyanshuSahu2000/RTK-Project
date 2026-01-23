@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 // import axios from "axios";
 import { fetchGif, fetchPhotos, fetchVideos } from "../api/mediaApi";
 import {
+  nextPage,
+  prevPage,
   setError,
   setLoading,
   setResults,
 } from "../redux/features/searchSlice";
 import ResultCard from "./ResultCard";
-// import { setquery } from "../redux/features/searchSlice";
-
 const ResultGrid = () => {
-  const { query, activeTab, results, error, loading } = useSelector(
+  const { query, activeTab, results, error, loading, page } = useSelector(
     (store) => store.search
   );
   //   const activeTab = useSelector((state) => state.search.activeTab);
@@ -28,19 +28,19 @@ const ResultGrid = () => {
       try {
         dispatch(setLoading());
         if (activeTab == "photos") {
-          let res = await fetchPhotos(query);
+          let res = await fetchPhotos(query, page);
           data = res.map((item) => ({
             id: item.id,
             type: "photo",
             title: item.photographer,
             thumbnail: item.src.tiny,
-            src: item.src.original,
+            src: item.src.tiny,
             url: item.url,
           }));
           console.log(res);
         }
         if (activeTab == "videos") {
-          let res = await fetchVideos(query);
+          let res = await fetchVideos(query, page);
           data = res.map((item) => ({
             id: item.id,
             type: "video",
@@ -69,20 +69,42 @@ const ResultGrid = () => {
       }
     };
     getData();
-  }, [query, activeTab]);
+  }, [query, activeTab, page]);
   if (error) return <h1>Error</h1>;
   if (loading) return <h1>Loading...</h1>;
 
   return (
-    <div className="flex sm:justify-between justify-around w-full flex-wrap gap-5 overflow-auto sm:px-10 px-4">
-      {results.map((item, idx) => {
-        return (
-          <div key={idx}>
-            <ResultCard item={item} />
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div className="flex sm:justify-between justify-around w-full flex-wrap gap-4 overflow-auto sm:px-8 px-4">
+        {results.map((item, idx) => {
+          return (
+            <div key={idx}>
+              <ResultCard item={item} />
+            </div>
+          );
+        })}
+      </div>
+      {activeTab !== "gif" && (
+        <div className="flex justify-center items-center gap-4 mt-6 pb-3">
+          <button
+            onClick={() => dispatch(prevPage())}
+            disabled={page === 1}
+            className="px-4 py-2 bg-gray-700 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          <span className="text-white px-2">Page {page}</span>
+
+          <button
+            onClick={() => dispatch(nextPage())}
+            className="px-4 py-2 bg-gray-700 rounded"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 export default ResultGrid;

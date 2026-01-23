@@ -15,12 +15,12 @@ const SearchBar = () => {
         onSubmit={(e) => {
           submitHandler(e);
         }}
-        className=" flex gap-4 p-6 bg-(--c1) "
+        className=" flex gap-4 sm:p-6 p-3 bg-(--c1) "
       >
         <input
           required
           type="text"
-          className="border-2 outline-none px-5 py-1 text-lg rounded w-full min-w[70vw]"
+          className="border-2 outline-none sm:px-5 px-2 py-1 text-base rounded w-full min-w[70vw]"
           placeholder="Search anything..."
           value={text}
           onChange={(e) => {
